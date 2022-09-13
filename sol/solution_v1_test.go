@@ -2,39 +2,17 @@ package sol
 
 import (
 	"reflect"
-	"strconv"
 	"testing"
 )
 
-func BenchmarkTest(b *testing.B) {
+func BenchmarkTestV1(b *testing.B) {
 	preorder := []int{3, 9, 20, 15, 7}
 	inorder := []int{9, 3, 15, 20, 7}
 	for idx := 0; idx < b.N; idx++ {
-		buildTree(preorder, inorder)
+		buildTreeV1(preorder, inorder)
 	}
 }
-func CreateBinaryTree(input *[]string) *TreeNode {
-	var tree *TreeNode
-	arr := *input
-	result := make([]*TreeNode, len(arr))
-	for idx, val := range arr {
-		if val != "null" {
-			num, _ := strconv.Atoi(val)
-			result[idx] = &TreeNode{Val: num}
-		}
-	}
-	tree = result[0]
-	for idx, node := range result {
-		if 2*idx+1 < len(result) {
-			node.Left = result[2*idx+1]
-		}
-		if 2*idx+2 < len(result) {
-			node.Right = result[2*idx+2]
-		}
-	}
-	return tree
-}
-func Test_buildTree(t *testing.T) {
+func Test_buildTreeV1(t *testing.T) {
 	type args struct {
 		preorder []int
 		inorder  []int
@@ -57,8 +35,8 @@ func Test_buildTree(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := buildTree(tt.args.preorder, tt.args.inorder); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("buildTree() = %v, want %v", got, tt.want)
+			if got := buildTreeV1(tt.args.preorder, tt.args.inorder); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("buildTreeV1() = %v, want %v", got, tt.want)
 			}
 		})
 	}
